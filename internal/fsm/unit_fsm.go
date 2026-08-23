@@ -36,9 +36,10 @@ func (f *UnitFSM) State() UnitPhase { return f.state }
 func (f *UnitFSM) Dispatch(ctx context.Context, event string) (UnitPhase, error) {
 	next, ok := allowedUnit(f.state, event)
 	if !ok {
-		if f.hooks != nil {
-			_ = f.hooks.RunAfter(ctx, f.state, f.state, event)
-		}
+		// An illegal transition is a no-op: the state does not change, so
+		// after-transition hooks (including the compressor raise-frequency
+		// pulse) must not fire. Running them here would let a stray/unhandled
+		// event drive the compressor while the unit stays in standby.
 		return f.state, fmt.Errorf("%s from %s: %w", event, f.state, ErrIllegalUnitTransition)
 	}
 	from := f.state
