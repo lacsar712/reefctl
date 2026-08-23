@@ -1,2 +1,2 @@
-// Package reefctl is an industrial coolant rack controller for chiller plant coordination.
+// Package reefctl is a reefer cold-chain unit controller for defrost and airflow coordination.
 package reefctl
