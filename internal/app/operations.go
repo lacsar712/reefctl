@@ -23,7 +23,7 @@ func (a *App) ConfirmZoneHold(ctx context.Context, anchor time.Time) error {
 		return model.Wrap("zone hold", "window", model.ErrZoneHold)
 	}
 	if err := a.zoneWindow.Require(anchor); err != nil {
-		return fmt.Errorf("zone hold: window not satisfied")
+		return fmt.Errorf("zone hold: window not satisfied: %w", err)
 	}
 	_ = ctx
 	return nil
