@@ -14,7 +14,7 @@ func (a *App) ExecutePlan(ctx context.Context, plan DefrostPlan) error {
 	if a.scheduler == nil {
 		return nil
 	}
-	return a.scheduler.InstallDefrostPlanCtx(context.Background(), clock.DefrostPlan{PlanSteps: plan.PlanSteps}, "defrost-plan")
+	return a.scheduler.InstallDefrostPlanCtx(ctx, clock.DefrostPlan{PlanSteps: plan.PlanSteps}, "defrost-plan")
 }
 
 func (a *App) DefrostStepsDone() int {
