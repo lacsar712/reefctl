@@ -15,10 +15,11 @@ type Registry struct {
 func NewRegistry() *Registry {
 	return &Registry{
 		codes: map[model.AlarmCode]string{
-			"FLOW_LOW":        "airflow below setpoint",
-			"DEFROST_OVERRUN": "defrost cycle window exceeded",
-			"COMPRESSOR_TRIP": "compressor tripped",
-			"VALVE_STUCK":     "damper interlock timeout",
+			"FLOW_LOW":         "airflow below setpoint",
+			"DEFROST_OVERRUN":  "defrost cycle window exceeded",
+			"COMPRESSOR_TRIP":  "compressor tripped",
+			"VALVE_STUCK":      "damper interlock timeout",
+			"REFRIGERANT_HIGH": "refrigerant pressure high",
 		},
 		raised: make(map[model.AlarmCode]int),
 	}
