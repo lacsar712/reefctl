@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/lacsar712/reefctl/internal/clock"
+	"github.com/lacsar712/reefctl/internal/model"
 )
 
 type CompressorStart struct {
@@ -27,6 +28,11 @@ func (c *CompressorStart) Start(ctx context.Context) error {
 	step := 100.0 / float64(c.steps)
 	cur := 0.0
 	for cur < 100 {
+		select {
+		case <-ctx.Done():
+			return model.Wrap("compressor", "canceled", context.Cause(ctx))
+		default:
+		}
 		cur += step
 		if cur > 100 {
 			cur = 100
@@ -35,7 +41,13 @@ func (c *CompressorStart) Start(ctx context.Context) error {
 		if pc, ok := c.clk.(*clock.ProcessClock); ok {
 			pc.Step()
 		}
-		time.Sleep(2 * time.Millisecond)
+		t := time.NewTimer(2 * time.Millisecond)
+		select {
+		case <-ctx.Done():
+			t.Stop()
+			return model.Wrap("compressor", "canceled", context.Cause(ctx))
+		case <-t.C:
+		}
 	}
 	return nil
 }
