@@ -67,6 +67,9 @@ type ZoneSnapshot struct {
 
 func CloneZoneSnapshot(s ZoneSnapshot) ZoneSnapshot {
 	out := ZoneSnapshot{Unit: s.Unit}
-	out.DefrostSlots = s.DefrostSlots
+	if len(s.DefrostSlots) > 0 {
+		out.DefrostSlots = make([]DefrostSlotSnapshot, len(s.DefrostSlots))
+		copy(out.DefrostSlots, s.DefrostSlots)
+	}
 	return out
 }
