@@ -1,6 +1,6 @@
-# HookRelay
+# reefctl
 
-Signed ingress + reliable outbound webhook delivery (retry, circuit breaker, rate limit, DLQ, replay).
+reefctl 是一套冷藏集装箱机组工业过程控制系统，用于压缩机分级、蒸发器除霜与冷链协调。
 
 ## Requirements
 
